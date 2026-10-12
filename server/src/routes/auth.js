@@ -69,9 +69,18 @@ router.get('/github/callback', async (req, res) => {
   }
 });
 
-router.get('/me', requireAuth, (req, res) => {
-  const { login, name, avatarUrl } = req.user;
-  res.json({ login, name, avatarUrl });
+router.get('/me', async (req, res) => {
+  try {
+    const token = req.cookies.token;
+    if (!token) return res.json(null);
+    const { uid } = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(uid);
+    if (!user) return res.json(null);
+    const { login, name, avatarUrl } = user;
+    res.json({ login, name, avatarUrl });
+  } catch {
+    res.json(null);
+  }
 });
 
 router.post('/logout', (req, res) => {

@@ -1,1 +1,146 @@
 @import "tailwindcss";
+
+@theme {
+  --color-canvas: #F5F7FA;
+  --color-surface: #FFFFFF;
+  --color-line: #E2E8F0;
+  --color-ink: #0B1F3A;
+  --color-ink-hover: #14304F;
+  --color-muted: #526176;
+  --color-faint: #8C9AAF;
+  --color-accent: #0A8A89;
+
+  --font-display: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+}
+
+:root {
+  font-family: "Segoe UI", system-ui, sans-serif;
+  color: var(--color-ink);
+  background: var(--color-canvas);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  background: var(--color-canvas);
+  color: var(--color-ink);
+}
+
+
+.spec-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  background:
+    radial-gradient(ellipse at 50% 38%,
+      #123C60 0%,
+      #0B2946 42%,
+      #06172B 100%);
+}
+
+
+
+.spec-background__grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right,
+      rgba(91, 157, 205, 0.09) 1px,
+      transparent 1px),
+    linear-gradient(to bottom,
+      rgba(91, 157, 205, 0.09) 1px,
+      transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(to bottom,
+      transparent 0%,
+      black 16%,
+      black 84%,
+      transparent 100%);
+}
+
+
+.spec-background__watermark {
+  position: absolute;
+  width: clamp(320px, 36vw, 490px);
+  height: auto;
+  right: -115px;
+  bottom: -145px;
+  color: #6D9CC4;
+  opacity: 0.08;
+}
+
+.spec-background__icons {
+  position: absolute;
+  inset: 0;
+}
+
+.spec-background__icon {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #65A8D8;
+  opacity: 0.62;
+  animation: spec-float 14s ease-in-out infinite;
+}
+
+@keyframes spec-float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@media (max-width: 767px) {
+  .spec-background__grid {
+    background-size: 36px 36px;
+  }
+
+  .spec-background__watermark {
+    width: 300px;
+    right: -145px;
+    bottom: -105px;
+    opacity: 0.02;
+  }
+
+  .spec-background__icons {
+    display: none;
+  }
+}
+
+@media (max-height: 650px) and (min-width: 768px) {
+  .spec-background__watermark {
+    width: 350px;
+    right: -95px;
+    bottom: -115px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spec-background__icon {
+    animation: none;
+  }
+}
